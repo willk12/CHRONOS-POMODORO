@@ -1,4 +1,4 @@
-import { TaskModel } from './TaskModel';
+import type { TaskModel } from './TaskModel';
 
 export type TaskStateModel = {
   tasks: TaskModel[];
@@ -10,6 +10,5 @@ export type TaskStateModel = {
     workTime: number;
     shortBreakTime: number;
     longBreakTime: number;
-  
-  }
-}
+  };
+};
