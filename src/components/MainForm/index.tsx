@@ -7,15 +7,18 @@ import type { TaskModel } from '../../models/TaskModel';
 import { useTaskContext } from '../../contexts/TaskContext/useTaskContext';
 import { getNextCycle } from '../../utils/getNextCycle';
 import { getNextCycleType } from '../../utils/getNextCycleType';
-import { formatSecondsToMinutes } from '../../utils/formatSecondsToMinutes';
+import { TaskActionsTypes } from '../../contexts/TaskContext/taskActions';
+import { Tips } from '../Tips';
+
 
 export function MainForm() {
-  const { state, setState } = useTaskContext();
+  const { state, dispatch } = useTaskContext();
   const taskNameInput = useRef<HTMLInputElement>(null);
 
   //ciclos
   const nextCycle = getNextCycle(state.currentCycle);
   const nextCycleType = getNextCycleType(nextCycle);
+  
 
   function handleCreateNewTask(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
@@ -39,39 +42,13 @@ export function MainForm() {
       type: nextCycleType,
     };
 
-    const secondsRemaining = newTask.duration * 60;
+    dispatch({ type: TaskActionsTypes.START_TASK, payload: newTask });
 
-    setState(prevState => {
-      return {
-        ...prevState,
-        activeTask: newTask,
-        currentCycle: nextCycle,
-        secondsRemaining,
-        formattedSecondsRemaining: formatSecondsToMinutes(secondsRemaining),
-        tasks: [...prevState.tasks, newTask],
-      };
-    });
+    
   }
 
   function handleInterruptTask() {
-    setState(prevState => {
-      return {
-        ...prevState,
-        activeTask: null,
-        secondsRemaining: 0,
-        formattedSecondsRemaining: '00:00',
-        tasks:prevState.tasks.map(task => {
-          if (task.id === prevState.activeTask?.id) {
-            return {
-              ...task,
-              interruptedDate: Date.now(),
-            };
-          }
-          return task;
-        }),
-      };
-    });
-    
+    dispatch({ type: TaskActionsTypes.INTERRUPT_TASK });
   }
   return (
     <form action='' className='form' onSubmit={handleCreateNewTask}>
@@ -86,7 +63,7 @@ export function MainForm() {
         />
       </div>
       <div className='formRow'>
-        <p>proximo intervalo é de 25min.</p>
+        <Tips />
       </div>
 
       {state.currentCycle > 0 && (
@@ -103,7 +80,7 @@ export function MainForm() {
             type='submit'
             aria-label='Iniciar nova tarefa'
             title='Iniciar nova tarefa'
-            key="start-task"
+            key='start-task'
           />
         ) : (
           <DefaultButton
@@ -113,7 +90,7 @@ export function MainForm() {
             aria-label='Parar tarefa'
             title='Parar tarefa'
             onClick={handleInterruptTask}
-            key="stop-task"
+            key='stop-task'
           />
         )}
       </div>

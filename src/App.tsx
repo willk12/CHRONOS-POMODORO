@@ -7,7 +7,7 @@ import { TaskContextProvider } from './contexts/TaskContext/taskContentProvider'
 export function App() {
   return (
     <TaskContextProvider>
-      <Home />;
+      <Home />
     </TaskContextProvider>
 
   );
