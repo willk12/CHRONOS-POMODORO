@@ -62,7 +62,7 @@ export function taskReducer(
     case TaskActionsTypes.COUNT_DOWN: {
       return {
         ...state,
-        secondsRemaining: action.payload.secondsRemaining,
+        secondsRemaining: action.payload,
         formattedSecondsRemaining: formatSecondsToMinutes(action.payload),
       };
     }
