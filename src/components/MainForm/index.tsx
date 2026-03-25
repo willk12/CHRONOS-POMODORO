@@ -9,6 +9,7 @@ import { getNextCycle } from '../../utils/getNextCycle';
 import { getNextCycleType } from '../../utils/getNextCycleType';
 import { TaskActionsTypes } from '../../contexts/TaskContext/taskActions';
 import { Tips } from '../Tips';
+import { showMessage } from '../../adapters/showMessage';
 
 
 export function MainForm() {
@@ -22,15 +23,18 @@ export function MainForm() {
 
   function handleCreateNewTask(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
+    showMessage.dismiss();
 
     if (taskNameInput.current === null) return;
 
     const taskName = taskNameInput.current.value.trim();
 
     if (!taskName) {
-      alert('Por favor, insira um nome para a tarefa.');
+      showMessage.warn('Por favor, insira um nome para a tarefa.');
       return;
     }
+
+    showMessage.success('Tarefa criada com sucesso!');
 
     const newTask: TaskModel = {
       id: Date.now().toString(),
@@ -42,6 +46,8 @@ export function MainForm() {
       type: nextCycleType,
     };
 
+
+
     dispatch({ type: TaskActionsTypes.START_TASK, payload: newTask });
 
     
@@ -49,6 +55,8 @@ export function MainForm() {
 
   function handleInterruptTask() {
     dispatch({ type: TaskActionsTypes.INTERRUPT_TASK });
+    showMessage.dismiss();
+    showMessage.error('Tarefa interrompida!');
   }
   return (
     <form action='' className='form' onSubmit={handleCreateNewTask}>
