@@ -15,7 +15,7 @@ import { showMessage } from '../../adapters/showMessage';
 export function MainForm() {
   const { state, dispatch } = useTaskContext();
   const taskNameInput = useRef<HTMLInputElement>(null);
-
+  const lastTaskName = state.tasks[state.tasks.length - 1]?.name || '';
   //ciclos
   const nextCycle = getNextCycle(state.currentCycle);
   const nextCycleType = getNextCycleType(nextCycle);
@@ -58,6 +58,9 @@ export function MainForm() {
     showMessage.dismiss();
     showMessage.error('Tarefa interrompida!');
   }
+
+ 
+
   return (
     <form action='' className='form' onSubmit={handleCreateNewTask}>
       <div className='formRow'>
@@ -65,9 +68,10 @@ export function MainForm() {
           ref={taskNameInput}
           type='text'
           id='meuInput'
-          labeltext='Qualquer coisa'
+          labeltext='Digite sua tarefa'
           title='titulo'
           disabled={!!state.activeTask}
+          defaultValue={lastTaskName}
         />
       </div>
       <div className='formRow'>
@@ -89,6 +93,7 @@ export function MainForm() {
             aria-label='Iniciar nova tarefa'
             title='Iniciar nova tarefa'
             key='start-task'
+
           />
         ) : (
           <DefaultButton
