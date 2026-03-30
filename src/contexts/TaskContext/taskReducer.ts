@@ -67,6 +67,12 @@ export function taskReducer(
         formattedSecondsRemaining: formatSecondsToMinutes(action.payload),
       };
     }
+    case TaskActionsTypes.CHANGE_SETTINGS: {
+      return {
+        ...state,
+        config: {...action.payload},
+      };
+    }
 
     default:
       return state;
