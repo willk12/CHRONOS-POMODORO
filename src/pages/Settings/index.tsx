@@ -14,7 +14,7 @@ export function Settings() {
   useEffect(() => {
     document.title = 'Configurações - Chronos Pomodoro';
   }, []);
-  
+
   const { state, dispatch} = useTaskContext();
   const workTimeInputRef = useRef<HTMLInputElement>(null);
   const shortBreakTimeInputRef = useRef<HTMLInputElement>(null);
@@ -77,7 +77,7 @@ export function Settings() {
         <Heading>Configurações</Heading>
       </Container>
       <Container>
-        <p>Modifique as Configurações para tempo de foco, descanso curto e descanso longo</p>
+        <p style={{textAlign: 'center'}}>Modifique as Configurações para tempo de foco, descanso curto e descanso longo</p>
       </Container>
 
       <Container>

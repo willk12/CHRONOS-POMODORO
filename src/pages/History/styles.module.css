@@ -10,13 +10,14 @@
 }
 
 .responsiveTable {
-  overflow-x: auto;
+  
   border-radius: 0.8rem;
   margin-top: 2rem;
 }
 
 .responsiveTable table {
   width: 100%;
+  overflow-x: auto;
   min-width: 64rem;
   font-size: 1.6rem;
   border-collapse: collapse;

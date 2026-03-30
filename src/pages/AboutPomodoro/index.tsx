@@ -9,13 +9,14 @@ export function AboutPomodoro() {
   useEffect(()=>{
     document.title = 'Entenda o Pomodoro - Chronos Pomodoro';
   }, []);
-  
+
   return (
     <MainTemplate>
       <Container>
         <GenericHtml>
-          <Heading>A Técnica Pomodoro 🍅</Heading>
+          <Heading >A Técnica Pomodoro 🍅</Heading>
 
+         <div style={{textAlign: 'justify', padding: '20px'}}>
           <p>
             A Técnica Pomodoro é uma metodologia de produtividade criada por{' '}
             <strong>Francesco Cirillo</strong>, que consiste em dividir o
@@ -24,7 +25,7 @@ export function AboutPomodoro() {
             garantir descansos para evitar o cansaço mental.
           </p>
 
-          <img src="https://placehold.co/1920x1080" alt="" />
+          
 
           <h2>Como funciona o Pomodoro tradicional?</h2>
           <ul>
@@ -124,6 +125,7 @@ export function AboutPomodoro() {
           <p>
             <em>"Foco total, sem pressa, sem pausa, só vai!"</em> 💪🧘‍♂️
           </p>
+         </div>
         </GenericHtml>
       </Container>
     </MainTemplate>
