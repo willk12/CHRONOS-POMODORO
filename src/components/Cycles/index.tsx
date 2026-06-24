@@ -30,7 +30,6 @@ export function Cycles() {
             ></span>
           );
         })}
-        {/* <span className={`${styles.cycleDot} ${styles.workTime}`}></span> */}
       </div>
     </div>
   );

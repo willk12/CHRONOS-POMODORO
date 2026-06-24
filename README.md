@@ -1,73 +1,50 @@
-# React + TypeScript + Vite
+# 🍅 Chronos Pomodoro
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Aplicação web de produtividade baseada na Técnica Pomodoro, com cronômetro preciso, ciclos de foco/descanso configuráveis e histórico de tarefas persistido localmente.
 
-Currently, two official plugins are available:
+## Funcionalidades
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+- ⏱️ Cronômetro de foco, descanso curto e descanso longo
+- 🔁 Ciclos automáticos: a cada 4 ciclos de foco, um descanso longo é sugerido
+- ⚙️ Configuração personalizada da duração de cada tipo de ciclo
+- 📊 Histórico de tarefas com ordenação por nome, duração e data
+- 💾 Persistência de dados via `localStorage` (o progresso não se perde ao recarregar a página)
+- 🔔 Notificação sonora ao final de cada ciclo
+- 📱 Layout responsivo
 
-## React Compiler
+## Tecnologias
 
-The React Compiler is currently not compatible with SWC. See [this issue](https://github.com/vitejs/vite-plugin-react/issues/428) for tracking the progress.
+- [React 19](https://react.dev/) + [TypeScript](https://www.typescriptlang.org/)
+- [Vite](https://vitejs.dev/) (com plugin SWC)
+- [React Router v7](https://reactrouter.com/)
+- [date-fns](https://date-fns.org/) para manipulação de datas
+- [react-toastify](https://fkhadra.github.io/react-toastify/) para notificações
+- [lucide-react](https://lucide.dev/) para ícones
+- CSS Modules para estilização isolada por componente
+- ESLint + typescript-eslint
 
-## Expanding the ESLint configuration
+## Decisões técnicas
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+- **Web Worker para o cronômetro**: o countdown roda em uma thread separada e é calculado pela diferença entre o timestamp de início e o atual, evitando o drift comum de `setInterval` e mantendo a contagem correta mesmo com a aba em segundo plano.
+- **Gerenciamento de estado** com `useReducer` + Context API, seguindo um padrão de actions/reducer.
+- **Padrão Adapter** (`showMessage`) para isolar a aplicação da biblioteca de notificações.
+- **Padrão Singleton** no gerenciador do Web Worker, garantindo uma única instância ativa.
 
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+## Rodando localmente
 
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
-
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+```bash
+npm install
+npm run dev
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+Outros scripts disponíveis:
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
-
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+```bash
+npm run build    # build de produção
+npm run lint      # checagem de lint
+npm run preview   # preview do build de produção
 ```
+
+## Deploy
+
+Aplicação publicada na [Vercel](https://vercel.com/).
